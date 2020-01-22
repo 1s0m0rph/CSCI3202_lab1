@@ -30,10 +30,10 @@ void setup() {
 }
 
 void readSensors() {
-  cm_distance = 0; // Replace with code to read the distance sensor
-  line_left = 0; // Replace with code to read the left IR sensor
-  line_right = 0; // Replace with code to read the right IR sensor
-  line_center = 0; // Replace with code to read the center IR sensor
+  cm_distance = sparki.ping(); // Replace with code to read the distance sensor
+  line_left = sparki.lineLeft(); // Replace with code to read the left IR sensor
+  line_right = sparki.lineRight(); // Replace with code to read the right IR sensor
+  line_center = sparki.lineCenter(); // Replace with code to read the center IR sensor
 }
 
 void loop() {
@@ -63,11 +63,8 @@ void loop() {
         current_state = STATE_PICK_UP_OBJECT;
       }
       break;
-      
-
-      
-      break;
     case STATE_PICK_UP_OBJECT:
+      sparki.gripperClose();
       break;
     case STATE_ROTATE_180:
       break;
