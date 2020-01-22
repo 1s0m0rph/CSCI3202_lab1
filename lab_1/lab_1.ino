@@ -30,10 +30,10 @@ void setup() {
 }
 
 void readSensors() {
-  cm_distance = 0; // Replace with code to read the distance sensor
-  line_left = 0; // Replace with code to read the left IR sensor
-  line_right = 0; // Replace with code to read the right IR sensor
-  line_center = 0; // Replace with code to read the center IR sensor
+  cm_distance = sparki.ping(); // Replace with code to read the distance sensor
+  line_left = sparki.lineLeft(); // Replace with code to read the left IR sensor
+  line_right = sparki.lineLeft(); // Replace with code to read the right IR sensor
+  line_center = sparki.lineRight(); // Replace with code to read the center IR sensor
 }
 
 void loop() {
@@ -74,6 +74,18 @@ void loop() {
     case STATE_DRIVE_TO_LINE:
       break;
     case STATE_FOLLOW_LINE:
+        if ( lineLeft < threshold ){  
+          sparki.moveLeft(); // turn left
+        }
+        if ( lineRight < threshold ){  
+          sparki.moveRight(); // turn right
+        }
+       
+        // if the center line sensor is the only one reading a line
+        if ( (lineCenter < threshold) && (lineLeft > threshold) && (lineRight > threshold) )
+        {
+          sparki.moveForward(); // move forward
+        }  
       break;
     case STATE_FINAL:
       break;
