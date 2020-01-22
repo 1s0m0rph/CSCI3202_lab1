@@ -65,7 +65,7 @@ void loop() {
       break;
     case STATE_PICK_UP_OBJECT:
       sparki.gripperClose();
-      current_state = STATE_ROTATE
+      current_state = STATE_ROTATE_180;
       break;
     case STATE_ROTATE_180:
       sparki.moveRight(180);
@@ -79,15 +79,15 @@ void loop() {
         sparki.moveForward(1);
       break;
     case STATE_FOLLOW_LINE:
-        if ( lineLeft < threshold ){  
+        if ( line_left < threshold ){  
           sparki.moveLeft(); // turn left
         }
-        if ( lineRight < threshold ){  
+        if ( line_right < threshold ){  
           sparki.moveRight(); // turn right
         }
        
         // if the center line sensor is the only one reading a line
-        if ( (lineCenter < threshold) && (lineLeft > threshold) && (lineRight > threshold) )
+        if ( (line_center < threshold) && (line_left > threshold) && (line_right > threshold) )
         {
           sparki.moveForward(); // move forward
         }  
