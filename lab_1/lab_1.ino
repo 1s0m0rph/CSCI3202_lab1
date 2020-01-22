@@ -49,7 +49,11 @@ void loop() {
     case STATE_INITIAL:
       current_state = STATE_ROTATE_FIND_OBJECT;
     case STATE_ROTATE_FIND_OBJECT:
-      
+      if(cm_distance < 30)
+        current_state = STATE_GO_TO_OBJECT;
+       else
+        //keep rotating
+        sparki.moveRight();
       break;
     case STATE_GO_TO_OBJECT:
       if(cm_distance >= 7){
