@@ -1,10 +1,16 @@
 #include <Sparki.h>
 
-#define STATE_FIRST_ONE 0
-#define STATE_SECOND_ONE 1
+#define STATE_INITIAL 0
+#define STATE_ROTATE_FIND_OBJECT 1
+#define STATE_GO_TO_OBJECT 2
+#define STATE_PICK_UP_OBJECT 3
+#define STATE_ROTATE_180 4
+#define STATE_DRIVE_TO_LINE 5
+#define STATE_FOLLOW_LINE 6
+#define STATE_FINAL 7
 
 // Set up some global variables with default values to be replaced during operation
-int current_state = STATE_FIRST_ONE;
+int current_state = STATE_INITIAL;
 const int threshold = 700; // IR reading threshold to detect whether there's a black line under the sensor
 int cm_distance = 1000;
 int line_left = 1000;
