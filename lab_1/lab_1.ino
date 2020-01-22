@@ -51,7 +51,7 @@ void loop() {
     case STATE_ROTATE_FIND_OBJECT:
       if(cm_distance < 30)
         current_state = STATE_GO_TO_OBJECT;
-       else
+      else
         //keep rotating
         sparki.moveRight();
       break;
@@ -72,8 +72,25 @@ void loop() {
       current_state = STATE_DRIVE_TO_LINE;
       break;
     case STATE_DRIVE_TO_LINE:
+      if(line_center < threshold)
+        //we've reached the line
+        current_state = STATE_FOLLOW_LINE;
+       else
+        sparki.moveForward(1);
       break;
     case STATE_FOLLOW_LINE:
+        if ( lineLeft < threshold ){  
+          sparki.moveLeft(); // turn left
+        }
+        if ( lineRight < threshold ){  
+          sparki.moveRight(); // turn right
+        }
+       
+        // if the center line sensor is the only one reading a line
+        if ( (lineCenter < threshold) && (lineLeft > threshold) && (lineRight > threshold) )
+        {
+          sparki.moveForward(); // move forward
+        }  
       break;
     case STATE_FINAL:
       sparki.moveForward(1);
