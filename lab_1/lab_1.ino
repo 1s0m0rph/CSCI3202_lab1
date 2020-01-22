@@ -32,8 +32,8 @@ void setup() {
 void readSensors() {
   cm_distance = sparki.ping(); // Replace with code to read the distance sensor
   line_left = sparki.lineLeft(); // Replace with code to read the left IR sensor
-  line_right = sparki.lineLeft(); // Replace with code to read the right IR sensor
-  line_center = sparki.lineRight(); // Replace with code to read the center IR sensor
+  line_right = sparki.lineRight(); // Replace with code to read the right IR sensor
+  line_center = sparki.lineCenter(); // Replace with code to read the center IR sensor
 }
 
 void loop() {
@@ -51,7 +51,7 @@ void loop() {
     case STATE_ROTATE_FIND_OBJECT:
       if(cm_distance < 30)
         current_state = STATE_GO_TO_OBJECT;
-       else
+      else
         //keep rotating
         sparki.moveRight();
       break;
@@ -63,15 +63,17 @@ void loop() {
         current_state = STATE_PICK_UP_OBJECT;
       }
       break;
-      
-
-      
-      break;
     case STATE_PICK_UP_OBJECT:
+      sparki.gripperClose();
       break;
     case STATE_ROTATE_180:
       break;
     case STATE_DRIVE_TO_LINE:
+      if(line_center < threshold)
+        //we've reached the line
+        current_state = STATE_FOLLOW_LINE;
+       else
+        sparki.moveForward(1);
       break;
     case STATE_FOLLOW_LINE:
         if ( lineLeft < threshold ){  
