@@ -51,7 +51,7 @@ void loop() {
     case STATE_ROTATE_FIND_OBJECT:
       if(cm_distance < 30)
         current_state = STATE_GO_TO_OBJECT;
-       else
+      else
         //keep rotating
         sparki.moveRight();
       break;
@@ -69,6 +69,11 @@ void loop() {
     case STATE_ROTATE_180:
       break;
     case STATE_DRIVE_TO_LINE:
+      if(line_center < threshold)
+        //we've reached the line
+        current_state = STATE_FOLLOW_LINE;
+       else
+        sparki.moveForward(1);
       break;
     case STATE_FOLLOW_LINE:
       break;
