@@ -65,14 +65,20 @@ void loop() {
       break;
     case STATE_PICK_UP_OBJECT:
       sparki.gripperClose();
+      current_state = STATE_ROTATE
       break;
     case STATE_ROTATE_180:
+      sparki.moveRight(180);
+      current_state = STATE_DRIVE_TO_LINE;
       break;
     case STATE_DRIVE_TO_LINE:
       break;
     case STATE_FOLLOW_LINE:
       break;
     case STATE_FINAL:
+      sparki.moveForward(1);
+      sparki.beep();
+      sparki.gripperOpen();
       break;
   }
 
