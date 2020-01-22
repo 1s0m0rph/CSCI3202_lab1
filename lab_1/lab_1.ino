@@ -44,7 +44,26 @@ void loop() {
   sparki.print("STATExx: ");
   sparki.println(current_state);
 
-  // Your state machine code goes here
+  switch(current_state)
+  {
+    case STATE_INITIAL:
+      current_state = STATE_ROTATE_FIND_OBJECT;
+    case STATE_ROTATE_FIND_OBJECT:
+      
+      break;
+    case STATE_GO_TO_OBJECT:
+      break;
+    case STATE_PICK_UP_OBJECT:
+      break;
+    case STATE_ROTATE_180:
+      break;
+    case STATE_DRIVE_TO_LINE:
+      break;
+    case STATE_FOLLOW_LINE:
+      break;
+    case STATE_FINAL:
+      break;
+  }
 
   sparki.updateLCD();
   delay(100); // Only run controller at 10Hz
