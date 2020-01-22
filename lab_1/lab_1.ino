@@ -52,6 +52,16 @@ void loop() {
       
       break;
     case STATE_GO_TO_OBJECT:
+      if(cm_distance >= 7){
+        sparki.moveForward(1);
+      }
+      else{
+        current_state = STATE_PICK_UP_OBJECT;
+      }
+      break;
+      
+
+      
       break;
     case STATE_PICK_UP_OBJECT:
       break;
