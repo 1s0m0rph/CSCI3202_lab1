@@ -39,7 +39,7 @@ void readSensors() {
 void loop() {
   // put your main code here, to run repeatedly:
   readSensors(); // Read sensors once per loop() call
-
+  
   sparki.clearLCD();
   sparki.print("STATExx: ");
   sparki.println(current_state);
@@ -49,15 +49,17 @@ void loop() {
     case STATE_INITIAL:
       current_state = STATE_ROTATE_FIND_OBJECT;
     case STATE_ROTATE_FIND_OBJECT:
-      if(cm_distance < 30)
+      if(cm_distance < 30 && cm_distance >= 0) {
         current_state = STATE_GO_TO_OBJECT;
+        sparki.moveRight(4); //Overcompensate to make sure object is centered
+      }
       else
         //keep rotating
-        sparki.moveRight();
-      break;
+        sparki.moveRight(2);
+        break;
     case STATE_GO_TO_OBJECT:
-      if(cm_distance >= 7){
-        sparki.moveForward(1);
+      if(cm_distance >= 5){
+        sparki.moveForward(2);
       }
       else{
         current_state = STATE_PICK_UP_OBJECT;
@@ -65,6 +67,8 @@ void loop() {
       break;
     case STATE_PICK_UP_OBJECT:
       sparki.gripperClose();
+      delay(4000);
+      sparki.gripperStop();
       current_state = STATE_ROTATE_180;
       break;
     case STATE_ROTATE_180:
@@ -72,11 +76,11 @@ void loop() {
       current_state = STATE_DRIVE_TO_LINE;
       break;
     case STATE_DRIVE_TO_LINE:
-      if(line_center < threshold)
+       if(line_center < threshold)
         //we've reached the line
         current_state = STATE_FOLLOW_LINE;
        else
-        sparki.moveForward(1);
+        sparki.moveForward();
       break;
     case STATE_FOLLOW_LINE:
         if ( line_left < threshold ){  
@@ -87,7 +91,7 @@ void loop() {
         }
        
         // if the center line sensor is the only one reading a line
-        if ( (line_center < threshold) && (line_left > threshold) && (line_right > threshold) )
+        if ( (line_center < threshold) && (line_left < threshold) && (line_right < threshold) )
         {
           sparki.moveForward(); // move forward
         }  
@@ -96,6 +100,7 @@ void loop() {
       sparki.moveForward(1);
       sparki.beep();
       sparki.gripperOpen();
+      delay(5000);
       break;
   }
 
